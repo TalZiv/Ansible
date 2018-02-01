@@ -1,0 +1,10 @@
+Hosts file builder and updater playbook.
+
+base_hosts_file.txt contains a **TAB delimited** list of all the hosts file entries as it would appear on the remote hosts.
+the playbook **appends** to the hosts file.
+
+The playbook creates a flag file on the remote hosts at /etc called "hosts_built_ansible" this makes to playbook to differentiate between build and update.
+
+usage:
+cd hosts_update_playbook
+ansible-playbook -i ./hosts configure_hosts_file.yml
