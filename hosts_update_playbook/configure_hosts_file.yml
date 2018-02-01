@@ -1,0 +1,18 @@
+---
+- hosts: servers
+  gather_facts: yes
+  tasks:
+    - debug:
+         msg: "Make sure that base_hosts_file.txt is TAB delimited"
+    - name: "Checking if hosts file was updated by ansible before..."
+      stat:
+         path: /etc/hosts_built_ansible
+      register: hostsCheck
+
+    - name: "updating hosts file config loaded"
+      include_tasks: ./tasks/update_hosts_file.yml
+      when: hostsCheck.stat.exists
+
+    - name: "build hosts file config loaded"
+      include_tasks: ./tasks/build_hosts_file.yml
+      when: not hostsCheck.stat.exists

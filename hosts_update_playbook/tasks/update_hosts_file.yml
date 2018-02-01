@@ -1,0 +1,9 @@
+---
+- name: "update hosts file on remote server from local file"
+  vars:
+     file_contents: "{{lookup('file', '../base_hosts_file.txt').splitlines()}}"
+  replace:
+     path: /etc/hosts
+     regexp: ".*{{ (item.split('\t'))[1] }}$"
+     replace: "{{ item }}"
+  with_items: "{{ file_contents }}"
